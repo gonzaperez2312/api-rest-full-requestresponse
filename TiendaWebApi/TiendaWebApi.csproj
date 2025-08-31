@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UsuarioRequests\UsuarioRequests.csproj" />
-    <ProjectReference Include="..\UsuarioResponses\UsuarioResponses.csproj" />
-    <ProjectReference Include="..\UsuariosService\UsuariosService.csproj" />
+    <ProjectReference Include="..\TiendaRequests\TiendaRequests.csproj" />
+    <ProjectReference Include="..\TiendaResponses\TiendaResponses.csproj" />
+    <ProjectReference Include="..\TiendaService\TiendaService.csproj" />
   </ItemGroup>
 
 </Project>
