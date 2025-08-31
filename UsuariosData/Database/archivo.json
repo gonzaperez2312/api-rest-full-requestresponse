@@ -1,0 +1,9 @@
+[
+  {
+    "Id": 1,
+    "NombreCompleto": "Matias Perez",
+    "CorreoElectronico": "gonza@example.com",
+    "FechaRegistro": "0001-01-01T00:00:00",
+    "FechaEliminacion": null
+  }
+]
