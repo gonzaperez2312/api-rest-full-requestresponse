@@ -1,8 +1,8 @@
-﻿using UsuariosData;
-using UsuarioRequests;
-using UsuarioResponses;
+﻿using TiendaData;
+using TiendaRequests;
+using TiendaResponses;
 
-namespace UsuariosService
+namespace TiendaService
 {
     public class UsuarioService
     {
@@ -150,6 +150,44 @@ namespace UsuariosService
             return new ApiResponse<Usuario>(usuarioGuardado);
         }
 
+        public ApiResponse<CompraResponse> CrearCompra(CrearCompraRequest request)
+        {
+            var usuario = BuscarUsuarioPorId(request.UsuarioId);
+            if (!usuario.Success)
+            {
+                return new ApiResponse<CompraResponse>(usuario.Message ?? "Error desconocido", usuario.Errors);
+            }
+
+            var compra = new Compra
+            {
+                CodigoProducto = request.CodigoProducto,
+                PrecioSinImpuestos = request.PrecioSinImpuestos,
+                PrecioFinal = request.PrecioFinal,
+                Impuestos = request.PrecioFinal - request.PrecioSinImpuestos,
+                Cantidad = request.Cantidad,
+                FechaCompra = DateTime.Now,
+                Observaciones = request.Observaciones
+            };
+
+            var usuarioDb = usuario.Data!;
+            if (usuarioDb.Compras == null)
+            {
+                usuarioDb.Compras = new List<Compra>();
+            }
+
+            compra.Id = usuarioDb.Compras.Count + 1;
+            usuarioDb.Compras.Add(compra);
+
+            var usuarioActualizado = GuardarUsuario(usuarioDb);
+            if (!usuarioActualizado.Success)
+            {
+                return new ApiResponse<CompraResponse>(usuarioActualizado.Message ?? "Error desconocido", usuarioActualizado.Errors);
+            }
+
+            var compraResponse = MapToCompraResponse(compra);
+            return new ApiResponse<CompraResponse>(compraResponse, "Compra creada exitosamente");
+        }
+
         private static UsuarioResponse MapToUsuarioResponse(Usuario usuario)
         {
             return new UsuarioResponse
@@ -157,6 +195,21 @@ namespace UsuariosService
                 Id = usuario.Id,
                 NombreCompleto = usuario.NombreCompleto ?? string.Empty,
                 CorreoElectronico = usuario.CorreoElectronico ?? string.Empty
+            };
+        }
+
+        private static CompraResponse MapToCompraResponse(Compra compra)
+        {
+            return new CompraResponse
+            {
+                Id = compra.Id,
+                CodigoProducto = compra.CodigoProducto ?? string.Empty,
+                PrecioSinImpuestos = compra.PrecioSinImpuestos,
+                PrecioFinal = compra.PrecioFinal,
+                Impuestos = compra.Impuestos,
+                Cantidad = compra.Cantidad,
+                FechaCompra = compra.FechaCompra,
+                Observaciones = compra.Observaciones
             };
         }
     }

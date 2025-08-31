@@ -1,12 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace UsuariosData
+namespace TiendaData
 {
     public static class Archivos
     {
@@ -25,7 +19,7 @@ namespace UsuariosData
 
             listado.Add(data);
 
-            string directorioDestino = "../UsuariosData/Database";
+            string directorioDestino = "../TiendaData/Database";
             string rutaCompleta = Path.Combine(directorioDestino, "archivo.json");
             string rutaAbsolutaDestino = Path.GetFullPath(rutaCompleta);
 
@@ -38,10 +32,9 @@ namespace UsuariosData
 
         public static List<Usuario> LeerDesdeArchivoJson()
         {
-            string directorioDestino = "../UsuariosData/Database";
+            string directorioDestino = "../TiendaData/Database";
             string rutaCompleta = Path.Combine(directorioDestino, "archivo.json");
             string rutaAbsolutaDestino = Path.GetFullPath(rutaCompleta);
-
 
             if (File.Exists(rutaAbsolutaDestino))
             {
@@ -51,6 +44,50 @@ namespace UsuariosData
             else
             {
                 return new List<Usuario>();
+            }
+        }
+
+        public static Producto GuardarProductoEnArchivoJson(Producto data)
+        {
+            var listado = LeerProductosDesdeArchivoJson();
+
+            if (data.Id != 0)
+            {
+                listado.RemoveAll(x => x.Id == data.Id);
+            }
+            else
+            {
+                data.Id = listado.Count + 1;
+                data.FechaCreacion = DateTime.Now;
+            }
+
+            listado.Add(data);
+
+            string directorioDestino = "../TiendaData/Database";
+            string rutaCompleta = Path.Combine(directorioDestino, "productos.json");
+            string rutaAbsolutaDestino = Path.GetFullPath(rutaCompleta);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(rutaAbsolutaDestino));
+            string json = JsonConvert.SerializeObject(listado, Formatting.Indented);
+            File.WriteAllText(rutaAbsolutaDestino, json);
+
+            return data;
+        }
+
+        public static List<Producto> LeerProductosDesdeArchivoJson()
+        {
+            string directorioDestino = "../TiendaData/Database";
+            string rutaCompleta = Path.Combine(directorioDestino, "productos.json");
+            string rutaAbsolutaDestino = Path.GetFullPath(rutaCompleta);
+
+            if (File.Exists(rutaAbsolutaDestino))
+            {
+                string json = File.ReadAllText(rutaAbsolutaDestino);
+                return JsonConvert.DeserializeObject<List<Producto>>(json) ?? new List<Producto>();
+            }
+            else
+            {
+                return new List<Producto>();
             }
         }
     }

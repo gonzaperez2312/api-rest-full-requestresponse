@@ -1,4 +1,4 @@
-namespace UsuarioResponses
+namespace TiendaResponses
 {
     public class ApiResponse<T>
     {

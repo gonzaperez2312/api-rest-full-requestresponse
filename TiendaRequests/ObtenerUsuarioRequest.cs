@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UsuarioRequests
+namespace TiendaRequests
 {
     public class ObtenerUsuarioRequest
     {

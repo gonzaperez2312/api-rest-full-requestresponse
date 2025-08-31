@@ -1,0 +1,30 @@
+[
+  {
+    "Id": 1,
+    "Codigo": "1",
+    "Nombre": "string",
+    "Descripcion": "string",
+    "Marca": "string",
+    "Modelo": "string",
+    "Precio": 0.01,
+    "Stock": 2147483647,
+    "Categoria": "string",
+    "Especificaciones": "string",
+    "FechaCreacion": "2025-08-31T14:39:05.0178884-03:00",
+    "FechaEliminacion": null
+  },
+  {
+    "Id": 2,
+    "Codigo": "2",
+    "Nombre": "string",
+    "Descripcion": "string",
+    "Marca": "string",
+    "Modelo": "string",
+    "Precio": 0.01,
+    "Stock": 2147483647,
+    "Categoria": "string",
+    "Especificaciones": "string",
+    "FechaCreacion": "2025-08-31T14:39:13.7775713-03:00",
+    "FechaEliminacion": null
+  }
+]
